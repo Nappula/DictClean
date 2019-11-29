@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
-using System.Diagnostics;
+using System.Diagnostics; // for execution time measurement
 
 namespace DictClean
 {
@@ -80,6 +80,10 @@ namespace DictClean
         // Write the entire word list (mydictionary) into a file
         public void SaveDictionary(string myfilepath, string separatedby, IDictionary<int, string> mydict)
         {
+            // measuring time in the operation
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             using (StreamWriter fileWriter = new StreamWriter(myfilepath))
             {
                 foreach (KeyValuePair<int, string> kvPair in mydict)
@@ -88,6 +92,8 @@ namespace DictClean
                 }
                 fileWriter.Close();
             }
+            sw.Stop();
+            Console.WriteLine("File writing elapsed={0}", sw.Elapsed);
         }
 
 
@@ -99,10 +105,31 @@ namespace DictClean
             return dict;
         }
 
-        public IDictionary<int, string> OrderDictionary(string sense, string type, IDictionary<int, string> dict)
+        public IDictionary<int, string> OrderDictionary( /*string sense, string type,*/ IDictionary<int, string> mydict)
         {
-            return dict;
+
+
+            IDictionary<int, string> wl = new Dictionary<int, string>();
+            // testing by measuring time
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            // Use OrderBy method.
+            foreach (KeyValuePair<int, string> kvPair in mydict.OrderBy(i => i.Value))
+            {
+                wl.Add(kvPair);
+                // testing by print at console
+                // Console.WriteLine(kvPair);
+            }
+            // return time of execution
+            sw.Stop();
+            Console.WriteLine("Elapsed: {0}", sw.Elapsed);
+
+            //
+            return wl;
         }
+
+
 
         // Read line by line and remove numeric sequences
         // 542522 1 450/87 4 (5.6802e-06 %)

@@ -74,25 +74,30 @@ namespace DictClean
             Console.WriteLine("");
             Console.WriteLine("Press enter to continue");
             Console.ReadLine();
+            // End loading test
+           
+            // Testing IDictionary sorting
+            Console.WriteLine("Reodering the dictionary by value.");
+            myWordList = xm.OrderDictionary(myWordList);
+            Console.WriteLine("Press enter to continue.");
+            Console.ReadLine();
+            // End sorting test
 
-            // testing file writing of the wordlist
+            // testing file writing of the wordlist to csv file
             Console.WriteLine("Writing {0} words of dictionary to a csv file.", myWordList.Count);
-            // measuring time in the operation
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            myseparator = ",";
-            string mynewfilename = "dict_fi_01.csv";
+            
+            myseparator = ";";
+            string mynewfilename = "dict_fi_ordered_asc_01.csv";
             myfullpath = myfilepath + mynewfilename;
             xm.SaveDictionary(myfullpath, myseparator, myWordList);
-
-            sw.Stop();
-
-            Console.WriteLine("Saved {0} words in a csv file (separated by \"{1}\" at: {2}.",myWordList.Count, myseparator, myfullpath);
-            Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                        
+            Console.WriteLine("Saved {0} words in a csv file (separated by \"{1}\" at: {2}.", myWordList.Count, myseparator, myfullpath);
+            
             Console.WriteLine("");
             Console.WriteLine("Press enter to continue");
             Console.ReadLine();
+            // End saving to csv file test
+
         }
     }
 }
