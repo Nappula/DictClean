@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 namespace DictClean
 {
     class MyDictionary
     {
-        public List<string> wordlist { get; private set; }
-
+        public IDictionary<int, string> myDictionary { get; private set; }
 
 
         // Create lists of strings for each column of the cvs file
@@ -27,14 +28,19 @@ namespace DictClean
 
 
         // Load the entire word list (mydictionary) in memory
-        public List<string> LoadDictionary(string myfile, string separatedby)
+
+
+        public IDictionary<int, string> LoadDictionary(string myfile, string separatedby)
         {
+            // Using encoding to recover scandinavian chars from the file 
             using (var streamdata = new StreamReader(myfile, Encoding.GetEncoding("iso-8859-1")))
             {
                 string strjoiner;
+                int i = 1;
                 int j = 0;
 
-                List<string> wl = new List<string>();
+                IDictionary<int, string> wl = new Dictionary<int, string>();
+                
 
                 while (!streamdata.EndOfStream)
                 {
@@ -60,8 +66,8 @@ namespace DictClean
 
                                       
 
-                    wl.Add(strjoiner);
-                    
+                    wl.Add(new KeyValuePair<int, string>(i, strjoiner));
+                    i++;
 
                     
                 }
@@ -72,8 +78,31 @@ namespace DictClean
 
 
         // Write the entire word list (mydictionary) into a file
+        public void SaveDictionary(string myfilepath, string separatedby, IDictionary<int, string> mydict)
+        {
+            using (StreamWriter fileWriter = new StreamWriter(myfilepath))
+            {
+                foreach (KeyValuePair<int, string> kvPair in mydict)
+                {
+                    fileWriter.WriteLine("{0}{1} {2}{3}", kvPair.Key.ToString(), separatedby, kvPair.Value, Environment.NewLine);
+                }
+                fileWriter.Close();
+            }
+        }
 
 
+   
+
+        
+        public IDictionary<int, string> CleanDictionary(string checkfor, string action, IDictionary<int, string> dict)
+        {
+            return dict;
+        }
+
+        public IDictionary<int, string> OrderDictionary(string sense, string type, IDictionary<int, string> dict)
+        {
+            return dict;
+        }
 
         // Read line by line and remove numeric sequences
         // 542522 1 450/87 4 (5.6802e-06 %)

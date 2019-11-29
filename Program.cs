@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Diagnostics; // for execution time measurement
 
 
 /* Project DictClean
@@ -47,25 +48,51 @@ namespace DictClean
     {
         static void Main(string[] args)
         {
-            string myfilepath = @"M:\MichelangeloMarchesi\_CodeDevelopment\source\repos\DictClean\Data\parole_frek_Fi_1339787_to_normalize.csv";
+            string myfilepath = @"M:\MichelangeloMarchesi\_CodeDevelopment\source\repos\DictClean\Data\";
+            string myfilename = "parole_frek_Fi_1339787_to_normalize.csv";
+            string myfullpath = "";
             string myseparator = " ";
 
-            List<string> myWordList = new List<string>();
+            IDictionary<int, string> myWordList = new Dictionary<int, string>();
 
             MyDictionary xm = new MyDictionary();
 
             //test advice
-            Console.WriteLine("Loading dictionaryfile: {0}", myfilepath);
+            myfullpath = myfilepath + myfilename;
+            Console.WriteLine("Loading dictionaryfile: {0}", myfullpath);
 
-            myWordList = xm.LoadDictionary(myfilepath, myseparator);
+            myWordList = xm.LoadDictionary(myfullpath, myseparator);
 
             // test load printing few lines
 
             for (int i=1; i<100; i++)
             {
-                Console.Write(" {0}) " + myWordList[i * 10000] + "{1}", i*10000, ";");
+                int jumper = 10000 * i;
+                Console.Write(" {0}) {1}{2}", myWordList.Keys.ElementAt(jumper), myWordList.Values.ElementAt(jumper), ";");
             }
-            Console.ReadKey();
+
+            Console.WriteLine("");
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+
+            // testing file writing of the wordlist
+            Console.WriteLine("Writing {0} words of dictionary to a csv file.", myWordList.Count);
+            // measuring time in the operation
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            myseparator = ",";
+            string mynewfilename = "dict_fi_01.csv";
+            myfullpath = myfilepath + mynewfilename;
+            xm.SaveDictionary(myfullpath, myseparator, myWordList);
+
+            sw.Stop();
+
+            Console.WriteLine("Saved {0} words in a csv file (separated by \"{1}\" at: {2}.",myWordList.Count, myseparator, myfullpath);
+            Console.WriteLine("Elapsed={0}", sw.Elapsed);
+            Console.WriteLine("");
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
         }
     }
 }
