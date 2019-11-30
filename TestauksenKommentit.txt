@@ -1,0 +1,2 @@
+following path could be set to point to "project path" so i dont have to change it manually.
+string myfilepath = @"C:\Users\k1901131\Source\Repos\Nappula\DictClean\Data\";

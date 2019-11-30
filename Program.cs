@@ -48,7 +48,7 @@ namespace DictClean
     {
         static void Main(string[] args)
         {
-            string myfilepath = @"M:\MichelangeloMarchesi\_CodeDevelopment\source\repos\DictClean\Data\";
+            string myfilepath = @"C:\Users\k1901131\Source\Repos\Nappula\DictClean\Data\";
             string myfilename = "parole_frek_Fi_1339787_to_normalize.csv";
             string myfullpath = "";
             string myseparator = " ";
