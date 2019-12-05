@@ -1,2 +1,8 @@
 following path could be set to point to "project path" so i dont have to change it manually.
 string myfilepath = @"C:\Users\k1901131\Source\Repos\Nappula\DictClean\Data\";
+
+5.12.2019
+
+The application is in break mode
+An unhandled exception of type 'System.IO.FileNotFoundException' occurred in Unknown Module.
+Could not load file or assembly 'System.Runtime, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies. The system cannot find the file specified.
